@@ -6,7 +6,7 @@ const App = () => {
   let storedItem = JSON.parse(localStorage.getItem("key"));
   const [inp_sys, Setinp_sys] = useState("");
   const [inp_headen, Setinp_headen] = useState("");
-  const [final_arr, setFinal_array] = useState([]);
+  const [final_arr, setFinal_array] = useState(storedItem);
   const [sys_err, setSys_err] = useState(false);
   const [head_err, setHead_err] = useState(false);
   const [sysblocker, setsysblocker] = useState(false);
@@ -57,7 +57,7 @@ const App = () => {
       <div className="inp">
         <div className="input-class">
           <div className="inp_headen">
-            <label htmlFor="headen">headends</label>
+            <label htmlFor="headen">Headend</label>
             <input
               value={inp_headen}
               type="text"
@@ -71,8 +71,8 @@ const App = () => {
               className={head_err ? "err" : ""}
             />
           </div>
-          <div className="inp_sys">
-            <label htmlFor="sys">syscode</label>
+          <div className="inp_headen">
+            <label htmlFor="sys">Syscodes</label>
             <input
               value={inp_sys}
               type="text"
@@ -93,12 +93,13 @@ const App = () => {
       <div>
         <table>
           <tr>
-            <th>Data base</th>
-            <th>headen</th>
-            <th>syscode</th>
-            <th>zone</th>
+            <th>Market Abbreviation</th>
+            <th>Headend</th>
+            <th>Syscode</th>
+            <th>Zone</th>
             <th>XG Database</th>
             <th>TIME ZONE</th>
+            <th>Retail Zones Per IC</th>
           </tr>
           {final_arr.map((f, i) => {
             return (
@@ -109,6 +110,7 @@ const App = () => {
                 <td>{f.Zone}</td>
                 <td>{f["XG Database"]}</td>
                 <td>{f["TIME ZONE"]}</td>
+                <td>{f["Retail Zones Per IC"]}</td>
               </tr>
             );
           })}
