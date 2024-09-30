@@ -6,7 +6,7 @@ const App = () => {
   let storedItem = JSON.parse(localStorage.getItem("key"));
   const [inp_sys, Setinp_sys] = useState("");
   const [inp_headen, Setinp_headen] = useState("");
-  const [final_arr, setFinal_array] = useState(storedItem);
+  const [final_arr, setFinal_array] = useState([]);
   const [sys_err, setSys_err] = useState(false);
   const [head_err, setHead_err] = useState(false);
   const [sysblocker, setsysblocker] = useState(false);
