@@ -25,7 +25,7 @@ const App = () => {
   const display_table = () => {
     if (inp_headen) {
       let obj = Sys_data.filter(
-        (fil) => fil.Headend == inp_headen.toUpperCase()
+        (fil) => fil.Headend == inp_headen.toUpperCase().trim()
       );
       let o = [...obj, ...final_arr];
       setFinal_array(o);
@@ -37,7 +37,7 @@ const App = () => {
       }
     }
     if (inp_sys) {
-      let objs = Sys_data.filter((fil) => fil.Syscode == inp_sys);
+      let objs = Sys_data.filter((fil) => fil.Syscode == inp_sys.trim());
       setFinal_array([...objs, ...final_arr]);
       if (objs) {
         setSys_err(false);
