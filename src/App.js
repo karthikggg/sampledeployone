@@ -9,9 +9,14 @@ const App = () => {
   const [final_arr, setFinal_array] = useState([]);
   const [sys_err, setSys_err] = useState(false);
   const [head_err, setHead_err] = useState(false);
-  const [sysblocker, setsysblocker] = useState(false);
-  const [headblocker, setheadblocker] = useState(false);
-//hi
+  const [multi_sys, setMulti_sys] = useState("");
+
+ function extractNumberCodes(text) {
+  const matches = text.match(/\b\d{3,6}[a-zA-Z]?/g) || [];
+  return matches.map(m => m.replace(/[a-zA-Z]/g, ''));
+}
+
+  //hi
   useEffect(() => {
     localStorage.setItem("key", JSON.stringify(final_arr));
   }, [final_arr]);
@@ -25,7 +30,7 @@ const App = () => {
   const display_table = () => {
     if (inp_headen) {
       let obj = Sys_data.filter(
-        (fil) => fil.Headend == inp_headen.toUpperCase().trim()
+        (fil) => fil.Headend == inp_headen.toUpperCase().trim(),
       );
       let o = [...obj, ...final_arr];
       setFinal_array(o);
@@ -90,7 +95,37 @@ const App = () => {
         <button onClick={display_table}>submit</button>
         <button onClick={clear_table}>clear</button>
       </div>
-      <div>
+
+      {/* <div className="multi-sys">
+        <label htmlFor="multi-sys">Multi sys</label>
+        <input
+          value={multi_sys} 
+          type="text"
+          name="multi-sys"
+          id="multi-sys"
+          onChange={(e) => {
+            setMulti_sys(e.target.value);
+          }}
+        />
+        <button onClick={() => {
+          let arr = extractNumberCodes(multi_sys);
+          console.log(arr);
+          let newObject =  arr.map((sys) => {
+            return Sys_data.find((fil) => fil.Syscode == sys.trim());
+          })
+          newObject.map((obj, index) => {
+            if (obj) {
+              setFinal_array((prevArray) => [...prevArray, obj]);
+            }
+          })
+          console.log(newObject);
+          
+          
+        }}>
+          Submit
+        </button>
+          </div> */}
+        
         <table>
           <tr>
             <th>Market Abbreviation</th>
@@ -107,16 +142,16 @@ const App = () => {
                 <td>{f["Market Abbreviation"]}</td>
                 <td>{f.Headend}</td>
                 <td>{f.Syscode}</td>
-                <td>{f.Zone}</td>
+                <td className={f.Zone.toLowerCase().includes("dish") ? "dish" : "non"}>{f.Zone}</td>
                 <td>{f["XG Database"]}</td>
                 <td>{f["TIME ZONE"]}</td>
-                <td>{f["Retail Zones Per IC"]}</td>
+                <td className={f["Retail Zones Per IC"].toLowerCase().includes("dish") ? "dish" : "not-dish"}>{f["Retail Zones Per IC"]}</td>
               </tr>
             );
           })}
         </table>
-      </div>
     </div>
+    
   );
 };
 
