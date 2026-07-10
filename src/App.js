@@ -11,10 +11,10 @@ const App = () => {
   const [head_err, setHead_err] = useState(false);
   const [multi_sys, setMulti_sys] = useState("");
 
- function extractNumberCodes(text) {
-  const matches = text.match(/\b\d{3,6}[a-zA-Z]?/g) || [];
-  return matches.map(m => m.replace(/[a-zA-Z]/g, ''));
-}
+  function extractNumberCodes(text) {
+    const matches = text.match(/\b\d{3,6}[a-zA-Z]?/g) || [];
+    return matches.map((m) => m.replace(/[a-zA-Z]/g, ""));
+  }
 
   //hi
   useEffect(() => {
@@ -99,7 +99,7 @@ const App = () => {
       {/* <div className="multi-sys">
         <label htmlFor="multi-sys">Multi sys</label>
         <input
-          value={multi_sys} 
+          value={multi_sys}
           type="text"
           name="multi-sys"
           id="multi-sys"
@@ -107,51 +107,60 @@ const App = () => {
             setMulti_sys(e.target.value);
           }}
         />
-        <button onClick={() => {
-          let arr = extractNumberCodes(multi_sys);
-          console.log(arr);
-          let newObject =  arr.map((sys) => {
-            return Sys_data.find((fil) => fil.Syscode == sys.trim());
-          })
-          newObject.map((obj, index) => {
-            if (obj) {
-              setFinal_array((prevArray) => [...prevArray, obj]);
-            }
-          })
-          console.log(newObject);
-          
-          
-        }}>
+        <button
+          onClick={() => {
+            let arr = extractNumberCodes(multi_sys);
+            console.log(arr);
+            let newObject = arr.map((sys) => {
+              return Sys_data.find((fil) => fil.Syscode == sys.trim());
+            });
+            newObject.map((obj, index) => {
+              if (obj) {
+                setFinal_array((prevArray) => [...prevArray, obj]);
+              }
+            });
+            console.log(newObject);
+          }}
+        >
           Submit
         </button>
-          </div> */}
-        
-        <table>
-          <tr>
-            <th>Market Abbreviation</th>
-            <th>Headend</th>
-            <th>Syscode</th>
-            <th>Zone</th>
-            <th>XG Database</th>
-            <th>TIME ZONE</th>
-            <th>Retail Zones Per IC</th>
-          </tr>
-          {final_arr.map((f, i) => {
-            return (
-              <tr key={i}>
-                <td>{f["Market Abbreviation"]}</td>
-                <td>{f.Headend}</td>
-                <td>{f.Syscode}</td>
-                <td className={f.Zone.toLowerCase().includes("dish") ? "dish" : "non"}>{f.Zone}</td>
-                <td>{f["XG Database"]}</td>
-                <td>{f["TIME ZONE"]}</td>
-                <td className={f["Retail Zones Per IC"].toLowerCase().includes("dish") ? "dish" : "not-dish"}>{f["Retail Zones Per IC"]}</td>
-              </tr>
-            );
-          })}
-        </table>
+      </div> */}
+
+      <table>
+        <tr>
+          <th>Market Abbreviation</th>
+          <th>Headend</th>
+          <th>Syscode</th>
+          <th>Zone</th>
+          <th>XG Database</th>
+          <th>TIME ZONE</th>
+          <th>Retail Zones Per IC</th>
+        </tr>
+        {final_arr.map((f, i) => {
+          return (
+            <tr key={i}>
+              <td>{f["Market Abbreviation"]}</td>
+              <td>{f.Headend}</td>
+              <td>{f.Syscode}</td>
+              <td className={typeof(f.Zone) === "string" && f.Zone.includes("DISH") ? "dish" : "not-dish"}>
+                {f.Zone}
+              </td>
+              <td>{f["XG Database"]}</td>
+              <td>{f["TIME ZONE"]}</td>
+              <td
+                className={
+                  typeof(f["Retail Zones Per IC"]) === "string" && f["Retail Zones Per IC"].includes("DISH")
+                    ? "dish"
+                    : "not-dish"
+                }
+              >
+                {f["Retail Zones Per IC"]}
+              </td>
+            </tr>
+          );
+        })}
+      </table>
     </div>
-    
   );
 };
 
